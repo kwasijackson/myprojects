@@ -1,6 +1,7 @@
 package FullStackProject1;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -8,9 +9,11 @@ import java.util.Scanner;
 public class ClientInterface {
 	public static void displayMenu()
 {
+	System.out.println("= = = = = = = = = = LockedMe system = = = = = = = = =");
+	System.out.println("= = = = = = This system digitize documents = = = = = = =");
 	System.out.println("\n\nWelcome ADMIN\n\n");
-	System.out.println("Student Name: Charles Jackon");
-	System.out.println();
+	System.out.println("Student Name: Charles Jackon\n");
+	System.out.println("= = = = = = = = = = = = = = = = = = = = = = = = = = = ");
 	System.out.println("Choose one of the options");
 	System.out.println("1. Display All Files in Current Directory");
 	System.out.println("2. Perform File Operation");
@@ -35,14 +38,17 @@ public class ClientInterface {
 		Scanner sc = new Scanner(System.in);
 		listAllfles allfiles = new listAllfles();
 		
+	
 		while(true) { // current context
+			
 			displayMenu();
 			 try {
 			 int choice = sc.nextInt();
 			
 			switch(choice) {
 			case 1:
-				String path = "//home//charlesjacksonv//eclipse-workspace//CoreJavaDemo//";  
+				
+				String path = System.getProperty("user.dir");  
 				// creating a file object  
 				File fObj = new File(path); 
 				  
@@ -61,8 +67,39 @@ public class ClientInterface {
 				}  
 				break;
 			case 2:
+				String filename;
+				int newchoice=0;
+				while (newchoice!=4)  {
+					
 				displaySubMenu();
-				break;
+				 newchoice = sc.nextInt();
+				
+				switch(newchoice) {
+				case 1:
+					System.out.println("Enter the file name");
+					 filename = sc.next();
+                    fileoperation.addFile(filename);
+					break;
+				case 2:
+					System.out.println("Enter a filename to be deleted");
+				    filename = sc.next();
+				    fileoperation.deleteFile(filename);
+				    break;
+				case 3:
+					//Searching for a given file name ignore case
+					System.out.println("Enter a filename to be deleted");
+					filename = sc.next();
+					fileoperation.searchFile(filename);
+					break;
+			   case 4:
+					//Going to the main menu
+					break;
+				default:
+					System.out.println("Enter a number 1-4");
+					
+				}
+					
+				} break;
 			case 3:
 				System.exit(0);
 				break;
@@ -74,7 +111,7 @@ public class ClientInterface {
 
 			}
 		}
-		catch(InputMismatchException e){
+		catch(InputMismatchException | IOException e){
             System.out.println("An unexpected error happened. Please try again");
             sc.next();
           }
